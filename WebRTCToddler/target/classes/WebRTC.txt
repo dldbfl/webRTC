@@ -1,0 +1,48 @@
+WebRTC(Web Real-Time Communication : 구글과 MS에서 별도로 브라우저 기반 실시간 스트리밍 통신 표준 연구 진행된 ORTC 프로젝트 통합 기술)
+
+1. 정의 : 브라우저 또는 크로스 플랫폼(전화기, 노트북, TV, 셋톱박스, ATM기기, 냉장고 등) 환경 간 별도의 플러그인
+        (Flash or Silverlight 등) 설치 및 설정없이 비디오와 음성 스트리밍 데이터 전송 및 파일 공유 등을 실시간 
+        P2P방식으로  송,수신 가능하도록 설계된 구글과 주도의 프로젝트로서 W3C표준 API이며, 표준화 미지원 브라우저 대상
+            호환 환경 제공(adapter.js).
+            트랜스포트 레이어의 UDP 프로토콜을 활용하며, 컨넥션 실패시 TCP를 활용하게됨.
+2. 출처 : 영문 - https://webrtc.org/
+            국문 - https://developer.mozilla.org/ko/docs/WebSockets/Writing_WebSocket_client_applications      
+            가이드 - https://www.tutorialspoint.com/webrtc/webrtc_quick_guide.htm
+3. 주요 활용 객체
+   	3.1 RTCPeerConnection : 기타 플랫폼 간 컨넥션 설정 및 컨넥션 생성, 소멸 등의 컨넥션 관리, 미디어 스트리밍 UDP 프로토콜 등을
+   	                                    이벤트 드리븐 방식으로 처리
+   	                        - Session Management, Creation of Offer and Response, Stream Management,
+   	                          ICE Candidate Management
+   	    3.1.1 ICE(TURN and STUN) 
+   	              가. ICE(Interactive Connectivity Establishment) : 일반적인 실시간 미디어 패킷 송,수신 간 플랫폼 의존성 해소를 위한 SDP(세션기반프로토콜)의 
+   	                                                          Offer(제안측)/Answer(수락측) 프로토콜 모델을 기저로, SIP(세션아이피프로코톨)의 
+   	                                                          Request(요청)/Response(응답) 프로토콜 모델을 차용한 P2P 간 최적의 경로를 제안하는
+   	                                                                                       다이렉트 통신 기술.
+   	              나. STUN(Session Traversal Utilities for NAT) : 공중망 내 존재하는 스턴 서버는 LAN망내 사설IP를 활용하는 Peer에 외부 공중망으로부터 접근가능한 
+   	                                                         IP:Port 정보를 해당 LAN망 종단의 라우터 내 NAT에 제공.
+                    다. TURN(Traversal Using Relays around NAT) : 공중망 내 존재하는 턴 서버는 방화벽 또는 프록시 설치 및 설정으로 인해 특정 Peer와의 연결 실패시
+                                                                                        스트리밍 데이터를 릴레이하며, UDP 프로토콜을 활용한 Peer 연결 실패시, TCP 프로토콜을 활용
+                                                                                        하게되며, 실패시 패킷 릴레이를위한 서버 할당 과정을 명시한 턴 서버가 활용
+                                                                                        일반적으로 턴 서버에 스턴 서버 기능을 접목하여 활용.
+   	                                                          
+   	                               
+   	         * NAT : 공인IP와 사설IP(1:1 or 1:N) 간 맵핑을 통한 주소 변환 처리
+   	                               
+	3.2 MediaStream
+	3.3 RTCDataChannel
+
+4. WebSocket Server Endpoint
+   4.1 WAS 단 WebSocket Server(서블릿 어노테이션 베이스) : kr.or.ddit.controller.websocket.endpoint.WebSocketServerEP
+   4.2 WebSocket Server Endpoint 내 HttpSession 취득
+       4.2.1 web.xml 내 필터 등록 : <filter>
+								 	<filter-name>webSocketFilter</filter-name>
+								 	<filter-class>kr.or.ddit.filter.WebSocketFilter</filter-class>
+								 </filter>
+								 <filter-mapping>
+								 	<filter-name>webSocketFilter</filter-name>
+								 	<url-pattern>/wschat</url-pattern>
+								 </filter-mapping>
+	
+   
+   
+             
